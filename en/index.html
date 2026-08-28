@@ -3,6 +3,28 @@
 <head>
   <meta charset="utf-8">
   <title>Carelio</title>
+  <script>
+    if (new URLSearchParams(location.search).get('lang') === 'es') location.replace('../index.html');
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var observer = new MutationObserver(function () {
+        var labels = Array.from(document.querySelectorAll('span'));
+        var privacy = labels.find(function (el) { return el.textContent.trim() === 'Privacy'; });
+        var how = labels.find(function (el) { return el.textContent.trim() === 'How it works'; });
+        var heading = document.querySelector('h2');
+        if (!privacy || !how || !heading) return;
+        heading.id = 'how-it-works';
+        how.innerHTML = '<a href="#how-it-works" style="color:inherit">How it works</a>';
+        privacy.innerHTML = '<a href="../privacy.html?lang=en" style="color:inherit">Privacy</a>';
+        var support = document.createElement('span');
+        support.innerHTML = '<a href="../support.html?lang=en" style="color:inherit">Support</a>';
+        privacy.after(support);
+        observer.disconnect();
+      });
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+    });
+  </script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #F7F4EF; display: flex; align-items: center; justify-content: center; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }

@@ -99,13 +99,19 @@ body.en [data-lang=en]{display:block}
 
 </main>
 <footer class="wrap">
-  <span data-lang="es">© 2026 Carelio · una app de lonemonkey · <a href="https://carelioapp.com">carelioapp.com</a></span>
-  <span data-lang="en">© 2026 Carelio · a lonemonkey app · <a href="https://carelioapp.com">carelioapp.com</a></span>
+  <span data-lang="es">© 2026 Carelio · una app de lonemonkey · <a href="index.html?lang=es">Inicio</a> · <a href="support.html?lang=es">Soporte</a></span>
+  <span data-lang="en">© 2026 Carelio · a lonemonkey app · <a href="en/index.html">Home</a> · <a href="support.html?lang=en">Support</a></span>
 </footer>
 <script>
 function setLang(l){document.body.classList.toggle('en',l==='en');
 document.documentElement.lang=l;
 document.getElementById('es').classList.toggle('on',l==='es');
-document.getElementById('en').classList.toggle('on',l==='en');}
+document.getElementById('en').classList.toggle('on',l==='en');
+document.querySelector('.brand-name').href=l==='en'?'en/index.html':'index.html?lang=es';}
+var requestedLang=new URLSearchParams(location.search).get('lang');
+var browserLang=(navigator.languages&&navigator.languages[0])||navigator.language||'';
+var spanishZone=/^(America\/(Argentina|Asuncion|Bogota|Caracas|Guatemala|Guayaquil|Havana|La_Paz|Lima|Managua|Mexico_City|Montevideo|Panama|Puerto_Rico|Santiago|Santo_Domingo)|Atlantic\/Canary|Europe\/Madrid)$/.test(Intl.DateTimeFormat().resolvedOptions().timeZone||'');
+var initialLang=requestedLang==='es'||requestedLang==='en'?requestedLang:(browserLang.toLowerCase().split('-')[0]==='es'||spanishZone?'es':'en');
+setLang(initialLang);
 </script>
 </body></html>
